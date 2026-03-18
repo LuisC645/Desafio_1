@@ -1,32 +1,28 @@
 #include <iostream>
-#include "items.h"
+#include "board.h"
 
 using namespace std;
 
 int main() {
 
-    for(int i=0; i<5; i++){
-        for(int j=0; j<4; j++){
+    int width = 16;
+    int height = 10;
 
-            cout << "Figura " << i << " - Rotacion " << j << endl;
+    // Crear tablero
+    uint8_t** board = createBoard(width, height);
 
-            for (int row = 0; row < 4; ++row) {
-                for (int col = 0; col < 4; ++col) {
-                    if (getBitFigure(i, j, row, col)) {
-                        cout << "#";
-                    } else {
-                        cout << ".";
-                    }
-                }
-                cout << "\n";
-            }
+    // Test bits
+    setBit(board, 0, 0);
+    setBit(board, 0, 1);
+    setBit(board, 0, 2);
 
-            cout << "Dimensiones: " << endl;
-            cout << "Filas: " << getRowsFigure(i, j) << endl;
-            cout << "Columnas: " << getColumnsFigure(i, j) << endl;
+    setBit(board, 1, 5);
+    setBit(board, 2, 10);
+    setBit(board, 9, 15);
 
-        }
-    }
+    printBoard(board, width, height);
+
+    clearBoard(board, height);
 
     return 0;
 }

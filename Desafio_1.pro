@@ -20,7 +20,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     board.h \
-    headers/memory.h \
     items.h \
     memory.h \
     utils.h
