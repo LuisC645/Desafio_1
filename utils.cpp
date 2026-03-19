@@ -21,7 +21,7 @@ static int siguienteTipo() {
 
 // Colisiones
 
-static bool colision(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY){
+bool colision(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY){
 
     if(posX < 0){return true;}
     if(posX + getColumnsFigure(type, rot) > width){return true;}
@@ -32,7 +32,6 @@ static bool colision(uint8_t** board, int width, int height, int bytesPerRow, in
 
     for(int i=0; i<getRowsFigure(type, rot); i++){
         int boardRow = posY + i;
-
         uint8_t bits = getRowFigure(type, rot, i);
 
         uint8_t memStart = bits >> bitShift; // byte inicio de figura
@@ -48,7 +47,48 @@ static bool colision(uint8_t** board, int width, int height, int bytesPerRow, in
             }
         }
     }
-
     return false;
-
 }
+
+void setFigure(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY){
+
+    int byteStart = posX / 8; // Columna
+    int bitShift = posX % 8; // Posicion del bit dentro del byte
+
+    for(int i=0; i<getRowsFigure(type, rot); i++){
+
+        int boardRow = posY + i;
+        uint8_t bits = getRowFigure(type, rot, i);
+
+        uint8_t memStart = bits >> bitShift;
+
+        (board[boardRow][byteStart] |= memStart); // Pos bits memStart
+
+        if(bitShift > 0 && (byteStart + 1) < bytesPerRow){
+            uint8_t memEnd = bits << (8 - bitShift);
+            board[boardRow][byteStart + 1] |= memEnd;
+        }
+    }
+}
+
+int clearRows(uint8_t** board, int height, int bytesPerRow){
+
+    int deletes = 0;
+    int temp = height - 1;
+
+    while(temp >= 0){
+        if(fullRow(board, temp, bytesPerRow)){
+            downRow(board, temp, bytesPerRow);
+            deletes++;
+        } else{
+            temp--;
+        }
+    }
+    return deletes;
+}
+
+
+
+
+
+

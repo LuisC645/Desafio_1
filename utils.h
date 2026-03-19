@@ -14,9 +14,11 @@
 
 // Aleatoriedad - NO IDEA - CAMBIAR
 
-static bool colision(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY);
+bool colision(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY);
+void setFigure(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY);
+int clearRows(uint8_t** board, int height, int bytesPerRow);
+
 
 
 
 #endif // UTILS_H
-﻿

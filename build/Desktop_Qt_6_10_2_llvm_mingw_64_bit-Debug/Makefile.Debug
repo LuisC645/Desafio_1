@@ -141,13 +141,17 @@ debug/board.o: ../../board.cpp ../../board.h \
 debug/items.o: ../../items.cpp ../../items.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\items.o ..\..\items.cpp
 
-debug/main.o: ../../main.cpp ../../board.h
+debug/main.o: ../../main.cpp ../../memory.h \
+		../../items.h \
+		../../board.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
 debug/memory.o: ../../memory.cpp ../../memory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\memory.o ..\..\memory.cpp
 
-debug/utils.o: ../../utils.cpp 
+debug/utils.o: ../../utils.cpp ../../memory.h \
+		../../items.h \
+		../../board.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\utils.o ..\..\utils.cpp
 
 ####### Install

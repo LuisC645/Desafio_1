@@ -141,13 +141,17 @@ release/board.o: ../../board.cpp ../../board.h \
 release/items.o: ../../items.cpp ../../items.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\items.o ..\..\items.cpp
 
-release/main.o: ../../main.cpp ../../board.h
+release/main.o: ../../main.cpp ../../memory.h \
+		../../items.h \
+		../../board.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
 release/memory.o: ../../memory.cpp ../../memory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\memory.o ..\..\memory.cpp
 
-release/utils.o: ../../utils.cpp 
+release/utils.o: ../../utils.cpp ../../memory.h \
+		../../items.h \
+		../../board.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\utils.o ..\..\utils.cpp
 
 ####### Install
