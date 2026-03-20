@@ -1,26 +1,11 @@
 #include <iostream>
 
-#include "memory.h"
 #include "items.h"
 #include "board.h"
 
 using namespace std;
 
-// Aleatoriedad - IDEA INVESTIGAR - CAMBIAR
-
-static unsigned int semilla = 12345u;
-
-static unsigned int siguienteAleatorio() {
-    semilla = semilla * 1664525u + 1013904223u;
-    return semilla;
-}
-
-static int siguienteTipo() {
-    return static_cast<int>(siguienteAleatorio() % TOTAL);
-}
-
 // Colisiones
-
 bool colision(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY){
 
     if(posX < 0){return true;}
@@ -50,7 +35,7 @@ bool colision(uint8_t** board, int width, int height, int bytesPerRow, int type,
     return false;
 }
 
-void setFigure(uint8_t** board, int width, int height, int bytesPerRow, int type, int rot, int posX, int posY){
+void setFigure(uint8_t** board, int bytesPerRow, int type, int rot, int posX, int posY){
 
     int byteStart = posX / 8; // Columna
     int bitShift = posX % 8; // Posicion del bit dentro del byte
@@ -85,6 +70,110 @@ int clearRows(uint8_t** board, int height, int bytesPerRow){
         }
     }
     return deletes;
+}
+
+
+// Imprimir board + figure
+
+void printBoardFigure(uint8_t** board, int width, int height, int type, int rot, int posX, int posY, int score){
+
+    cout << endl << "Score: " << score << endl;
+
+    for(int row=0; row < height; row++){
+        cout << "|";
+
+        for(int col=0; col < width; col++){
+
+            bool taken = getBit(board, row, col);
+
+            if(!taken){
+                int figureRow = row - posY;
+                int figureCol = col - posX;
+
+                if(figureRow >= 0 && figureRow < getRowsFigure(type, rot) && figureCol >= 0 && getColumnsFigure(type, row)){
+                    taken = getBitFigure(type, rot, figureRow, figureCol);
+                }
+            }
+
+            if(taken){
+                cout << "#";
+            }else{
+                cout << ".";
+            }
+        }
+        cout << endl;
+    }
+    cout << "+";
+    for(int i=0; i<width; i++){
+        cout << "-";
+    }
+    cout << "+" << endl;
+}
+
+// Entrada teclado
+
+void inputKey(uint8_t** board, int width, int height, int bytesPerRow, int type, int& rot, int& posX, int& posY, char input){
+
+    switch (input) {
+
+    case 'a': case 'A':
+        if (!colision(board, width, height, bytesPerRow, type, rot, posX - 1, posY)){
+            posX--;
+            break;
+        }
+
+    case 'd': case 'D':
+        if (!colision(board, width, height, bytesPerRow, type, rot, posX + 1, posY)){
+            posX++;
+            break;
+        }
+
+    case 's': case 'S':
+        if (!colision(board, width, height, bytesPerRow, type, rot, posX, posY + 1)){
+            posY++;
+            break;
+        }
+
+    case 'r': case 'R': {
+        int newRot = rotate(rot);
+        if (!colision(board, width, height, bytesPerRow, type, newRot, posX, posY)){
+            rot = newRot;
+            break;
+        }
+    }
+
+    default: break;
+    }
+}
+
+// Validación entradas                              // El usuario solo ingresa números
+long long validateNumbers(char input) {
+    char num[20];
+    long long temp = 0;
+    bool inputValid = false;
+
+    while (!inputValid) {
+        cout << input;
+        cin  >> num;
+
+        bool onlyNumbers = true;
+        temp = 0;
+
+        for (int i = 0; num[i] != '\0'; i++) {
+            if (num[i] < 48 || num[i] > 57) {
+                onlyNumbers = false;
+                break;
+            }
+            temp = (temp * 10) + (num[i] - 48);
+        }
+
+        if (!onlyNumbers || temp <= 0) {
+            cout << "Error: Ingrese un numero entero positivo valido.\n";
+        } else {
+            inputValid = true;
+        }
+    }
+    return temp;
 }
 
 
