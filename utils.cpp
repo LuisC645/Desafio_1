@@ -17,6 +17,7 @@ bool colision(uint8_t** board, int width, int height, int bytesPerRow, int type,
 
     for(int i=0; i<getRowsFigure(type, rot); i++){
         int boardRow = posY + i;
+        if (boardRow < 0) continue;
         uint8_t bits = getRowFigure(type, rot, i);
 
         uint8_t memStart = bits >> bitShift; // byte inicio de figura
@@ -90,7 +91,7 @@ void printBoardFigure(uint8_t** board, int width, int height, int type, int rot,
                 int figureRow = row - posY;
                 int figureCol = col - posX;
 
-                if(figureRow >= 0 && figureRow < getRowsFigure(type, rot) && figureCol >= 0 && getColumnsFigure(type, row)){
+                if(figureRow >= 0 && figureRow < getRowsFigure(type, rot) && figureCol >= 0 && getColumnsFigure(type, rot)){
                     taken = getBitFigure(type, rot, figureRow, figureCol);
                 }
             }
@@ -101,7 +102,7 @@ void printBoardFigure(uint8_t** board, int width, int height, int type, int rot,
                 cout << ".";
             }
         }
-        cout << endl;
+        cout << "|" << endl;
     }
     cout << "+";
     for(int i=0; i<width; i++){
@@ -119,42 +120,44 @@ void inputKey(uint8_t** board, int width, int height, int bytesPerRow, int type,
     case 'a': case 'A':
         if (!colision(board, width, height, bytesPerRow, type, rot, posX - 1, posY)){
             posX--;
-            break;
-        }
+        } break;
 
     case 'd': case 'D':
         if (!colision(board, width, height, bytesPerRow, type, rot, posX + 1, posY)){
             posX++;
-            break;
-        }
+        } break;
+
 
     case 's': case 'S':
         if (!colision(board, width, height, bytesPerRow, type, rot, posX, posY + 1)){
             posY++;
-            break;
-        }
+        } break;
 
     case 'r': case 'R': {
         int newRot = rotate(rot);
         if (!colision(board, width, height, bytesPerRow, type, newRot, posX, posY)){
             rot = newRot;
-            break;
-        }
+        } break;
     }
 
     default: break;
     }
 }
 
-// Validación entradas                              // El usuario solo ingresa números
-long long validateNumbers(char input) {
+// Validación entradas
+int validateSize(int mode) {
     char num[20];
-    long long temp = 0;
-    bool inputValid = false;
+    int temp;
 
-    while (!inputValid) {
-        cout << input;
-        cin  >> num;
+    while (true) {
+
+        if(mode == 0){
+            cout << "Ingrese el ancho del tablero (minimo 8, multiplo de 8): ";
+        } else if(mode == 1){
+            cout << "Ingrese el alto del tablero (minimo 8): ";
+        }
+
+        cin >> num;
 
         bool onlyNumbers = true;
         temp = 0;
@@ -167,17 +170,23 @@ long long validateNumbers(char input) {
             temp = (temp * 10) + (num[i] - 48);
         }
 
-        if (!onlyNumbers || temp <= 0) {
-            cout << "Error: Ingrese un numero entero positivo valido.\n";
-        } else {
-            inputValid = true;
+        // Validar ancho
+        if(mode == 0){
+            // Validar multiplo
+            if (!onlyNumbers || temp < 8 || temp % 8 != 0) {
+                cout << "ERROR" << endl;
+            } else {
+                return temp;
+            }
+        }
+        // Validar alto
+        else if(mode == 1){
+            // Validar minimo 8
+            if (!onlyNumbers || temp < 8) {
+                cout << "ERROR" << endl;
+            } else {
+                return temp;
+            }
         }
     }
-    return temp;
 }
-
-
-
-
-
-

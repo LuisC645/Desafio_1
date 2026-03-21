@@ -143,14 +143,14 @@ debug/items.o: ../../items.cpp ../../items.h
 
 debug/main.o: ../../main.cpp ../../memory.h \
 		../../items.h \
-		../../board.h
+		../../board.h \
+		../../utils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\..\main.cpp
 
 debug/memory.o: ../../memory.cpp ../../memory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\memory.o ..\..\memory.cpp
 
-debug/utils.o: ../../utils.cpp ../../memory.h \
-		../../items.h \
+debug/utils.o: ../../utils.cpp ../../items.h \
 		../../board.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\utils.o ..\..\utils.cpp
 

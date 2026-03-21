@@ -48,15 +48,6 @@ bool getBit(uint8_t** board, int row, int col){
     return bit;
 };
 
-// Necesarias?
-uint8_t getRowByte(uint8_t** board, int row, int byteIdx) {
-    return board[row][byteIdx];
-};
-
-void orRowByte(uint8_t** board, int row, int byteIdx, uint8_t mask) {
-    board[row][byteIdx] |= mask;
-};
-
 // Logica Rows
 bool fullRow(uint8_t** board, int row, int bytesPerRow){
     for(int i=0; i<bytesPerRow; i++){
