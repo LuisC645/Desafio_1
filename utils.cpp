@@ -130,7 +130,7 @@ void inputKey(uint8_t** board, int width, int height, int bytesPerRow, int type,
 
     case 's': case 'S':
         if (!colision(board, width, height, bytesPerRow, type, rot, posX, posY + 1)){
-            posY++;
+            //posY++ Solución de error, doble salto
         } break;
 
     case 'r': case 'R': {
