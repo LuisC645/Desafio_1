@@ -1,1 +1,1 @@
-"# Desafio_1" 
+Desafio 1 - Luis Castillo Chicaiza, Paulina Quintero Arenas
