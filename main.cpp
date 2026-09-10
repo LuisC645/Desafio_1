@@ -1,19 +1,15 @@
-#include <QCoreApplication>
+#include <tablero.h>
+#include <iostream>
 
-int main(int argc, char *argv[])
+using namespace std;
+
+int main()
 {
-    QCoreApplication a(argc, argv);
+    unsigned short columnas = 3;
+    unsigned short filas = 3;
+    unsigned char* tablero = crearTablero(filas, columnas);
 
-    // Set up code that uses the Qt event loop here.
-    // Call QCoreApplication::quit() or QCoreApplication::exit() to quit the application.
-    // A not very useful example would be including
-    // #include <QTimer>
-    // near the top of the file and calling
-    // QTimer::singleShot(5000, &a, &QCoreApplication::quit);
-    // which quits the application after 5 seconds.
-
-    // If you do not need a running Qt event loop, remove the call
-    // to QCoreApplication::exec() or use the Non-Qt Plain C++ Application template.
-
-    return QCoreApplication::exec();
+    //eliminarTablero(tablero);
+    //PRUEBA
+    return 0;
 }
