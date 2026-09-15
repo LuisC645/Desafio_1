@@ -17,7 +17,7 @@ unsigned char* crearTablero(unsigned short filas, unsigned short columnas){
     return tablero;
 }
 
-void elimnarTablero(unsigned char* tablero){
+void eliminarTablero(unsigned char* tablero){
     delete[] tablero;
 }
 
