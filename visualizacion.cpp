@@ -10,29 +10,29 @@ void mostrarTableroSimbolos(unsigned char* tablero, unsigned short filas, unsign
 
     cout << "\n---- Tablero Juego----\n" << "    ";
 
-    for(unsigned short c = 0; c < columnas; ++c){
+    for(unsigned short c = 0; c < columnas; c++){
         cout << c << "   ";
     }
 
     cout << endl << "  ";
 
-    for(unsigned short c = 0; c < columnas; ++c){
+    for(unsigned short c = 0; c < columnas; c++){
         cout << "----";
     }
 
     cout << endl;
 
-    for (unsigned short f = 0; f < filas;++f) {
+    for (unsigned short f = 0; f < filas; f++) {
 
         cout << f << " | ";
-        for(unsigned short c = 0; c < columnas; ++c){
+        for(unsigned short c = 0; c < columnas; c++){
             unsigned char valor = leerFicha(tablero, f, c, columnas);
             cout << simbolos[valor] << " | ";
         }
 
         cout << endl << "  ";
 
-        for (unsigned int c = 0; c < columnas; ++c) {
+        for (unsigned int c = 0; c < columnas; c++) {
             cout<< "----";
         }
 
