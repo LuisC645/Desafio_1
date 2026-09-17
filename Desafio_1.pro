@@ -10,7 +10,9 @@ SOURCES += \
         combinacion.cpp \
         juego.cpp \
         main.cpp \
+        redimensionar.cpp \
         tablero.cpp \
+        utils.cpp \
         visualizacion.cpp
 
 # Default rules for deployment.
@@ -21,5 +23,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     combinacion.h \
     juego.h \
+    redimensionar.h \
     tablero.h \
+    utils.h \
     visualizacion.h
