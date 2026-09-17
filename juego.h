@@ -5,6 +5,24 @@ void tableroAleatorio(unsigned char* tablero, unsigned short filas, unsigned sho
 void rellenarTablero(unsigned char* tablero, unsigned short filas, unsigned short columnas);
 void aplicarGravedad(unsigned char* tablero, unsigned short filas, unsigned short columnas);
 
-//Aqui falta ver q hacemos con cascada y eliminar alguna monda (si ven esto, plis mas tiempo)
+//Cascadas del niagara
+unsigned short cascadas(unsigned char* tablero,
+                        unsigned short filas,
+                        unsigned short columnas,
+                        unsigned short* combinacionesTotales,
+                        unsigned int* fichasEliminadas,
+                        unsigned int* puntuacion
+                        );
+
+bool eliminarFichaManual(unsigned char* tablero,
+                         unsigned short filas,
+                         unsigned short columnas,
+                         unsigned short filaSel,
+                         unsigned short colSel,
+                         unsigned int* eliminacionesUsuario,
+                         unsigned int* fichasEliminadas,
+                         unsigned int* puntuacion
+                         );
+
 
 #endif // JUEGO_H

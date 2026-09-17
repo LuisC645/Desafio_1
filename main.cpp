@@ -4,41 +4,56 @@
 #include "tablero.h"
 #include "visualizacion.h"
 #include "juego.h"
+#include "combinacion.h"
 
 using namespace std;
 
 int main() {
-
+    // Semilla aleatoria
     srand(time(0));
 
-    unsigned short filas = 4;
-    unsigned short columnas = 4;
+    unsigned short filas = 6;
+    unsigned short columnas = 6;
 
-    cout << "Creando tablero de " << filas << "x" << columnas << endl;
+    // Variables de estado del juego pasadas por puntero
+    unsigned short combinacionesTotales = 0;
+    unsigned int fichasEliminadas = 0;
+    unsigned int puntuacion = 0;
+
+    cout << "Inicializando memoria del tablero...\n";
     unsigned char* tablero = crearTablero(filas, columnas);
 
-    // Rellenar tablaro
+    // Crear Tablero
+    cout << "\n--- 1. TABLERO INICIAL ALEATORIO ---\n";
     tableroAleatorio(tablero, filas, columnas);
-    cout << "\n--- 1. TABLERO ALEATORIO ---\n";
+    mostrarTableroSimbolos(tablero, filas, columnas);
+    mostrarTableroBinario(tablero, filas, columnas);
+
+
+    cout << "\n--- 2. CASCADAS ALEATORIAS MAYBE ---\n";
+    unsigned short cascadasIniciales = cascadas(tablero, filas, columnas, &combinacionesTotales, &fichasEliminadas, &puntuacion);
+    mostrarTableroSimbolos(tablero, filas, columnas);
+    cout << ">> Cascadas automaticas: " << cascadasIniciales << "\n";
+
+    // Eliminar fichoza
+    cout << "\n--- 3. Eliminar fixhoza ---\n";
+    cout << "Tres fichas 'A' en la parte superior izquierda.\n";
+    escribirFicha(tablero, 0, 0, columnas, 1);
+    escribirFicha(tablero, 0, 1, columnas, 1);
+    escribirFicha(tablero, 0, 2, columnas, 1);
     mostrarTableroSimbolos(tablero, filas, columnas);
 
-    // Escribir 0 pa proba
-    escribirFicha(tablero, 2, 1, columnas, 0); // Fila 2, Col 1 -> Vacio
-    escribirFicha(tablero, 3, 1, columnas, 0); // Fila 3, Col 1 -> Vacio
-    escribirFicha(tablero, 3, 2, columnas, 0); // Fila 3, Col 2 -> Vacio
-
-    cout << "\n--- 2. TABLERO CON HUECOS ---\n";
+    // funciono?
+    cout << "\n--- Ojala funcione: ---\n";
+    unsigned short cascadasJugada = cascadas(tablero, filas, columnas, &combinacionesTotales, &fichasEliminadas, &puntuacion);
     mostrarTableroSimbolos(tablero, filas, columnas);
 
-    // la gravity
-    aplicarGravedad(tablero, filas, columnas);
-    cout << "\n--- 3. TRAS LA GRAVEDAD ---\n";
-    mostrarTableroSimbolos(tablero, filas, columnas);
-
-    // rellenar huecos
-    rellenarTablero(tablero, filas, columnas);
-    cout << "\n--- 4. TABLERO RELLENADO ---\n";
-    mostrarTableroSimbolos(tablero, filas, columnas);
+    // stats pa
+    cout << "\n--- stats pa ---\n";
+    cout << "Puntuacion total: " << puntuacion << "\n";
+    cout << "Fichas destruidas: " << fichasEliminadas << "\n";
+    cout << "Combinaciones halladas: " << combinacionesTotales << "\n";
+    cout << "Cascadas en el ultimo movimiento: " << cascadasJugada << "\n";
 
     eliminarTablero(tablero);
 
