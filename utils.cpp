@@ -30,7 +30,7 @@ unsigned short validarEntrada(const char* texto, unsigned short tipo){
         }
 
         // 0, 1, 2
-        if (!soloDigitos || (tipo == 0 && temporal < 3) || (tipo == 2 && temporal > 6)) {
+        if (!soloDigitos || (tipo == 0 && temporal < 3) || (tipo == 2 && temporal > 7)) {
             cout << "Error: Entrada invalida" << endl;
         } else {
             valor = temporal;

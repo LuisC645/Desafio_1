@@ -62,6 +62,7 @@ int main() {
         cout << "[4] Agregar columna\n";
         cout << "[5] Eliminar columna\n";
         cout << "[6] Mostrar tablero binario\n";
+        cout << "[7] Mostrar memoria\n";
         cout << "[0] Salir\n";
         cout << "> Seleccione una accion: ";
 
@@ -151,6 +152,10 @@ int main() {
             mostrarTableroBinario(tablero, filas, columnas);
             break;
 
+        case 7:
+
+            mostrarMemoriaFisica(tablero, bytesNecesarios(filas, columnas));
+            break;
         case 0:
 
             jugando = false;
